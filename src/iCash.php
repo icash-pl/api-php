@@ -29,7 +29,7 @@ class iCash
     /**
      * @return mixed
      */
-    public function getStatusCode($data = [])
+    public function getStatusCode($data = array())
     {
         return $this->response = $this->request('status', $data);
     }
@@ -146,7 +146,7 @@ class iCash
      * @return mixed
      * @throws RuntimeException
      */
-    public function request($uri, $data = [])
+    public function request($uri, $data = array())
     {
         $this->last_uri = $uri;
         
@@ -155,7 +155,7 @@ class iCash
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_TIMEOUT, 10);
         curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, array_merge($data, ['app_key' => $this->app_key]));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, array_merge($data, array('app_key' => $this->app_key)));
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_VERBOSE, true);
