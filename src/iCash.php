@@ -1,5 +1,9 @@
 <?php
 
+namespace Icashpl\ApiPhp;
+
+use Exception;
+
 class iCash
 {
     protected $api = 'https://icash.pl/api/';
@@ -10,6 +14,18 @@ class iCash
     
     protected $response;
     
+    /*
+     * Method
+     */
+    const POST = 'post';
+    const GET = 'get';
+    
+    /*
+     * Uri
+     */
+    const STATUS = 'status';
+    const SERVICES = 'services';
+
     /**
      * @param string $app_key
      */
@@ -19,19 +35,41 @@ class iCash
     }
     
     /**
+     * Get status code
+     *
      * @return mixed
      */
-    public function response()
+    public function getStatusCode($data = [])
     {
-        return $this->response;
+        return $this->response = $this->request(static::STATUS, static::POST, $data);
+    }
+    
+    /**
+     * Get services
+     *
+     * @return mixed
+     */
+    public function getServices()
+    {
+        return $this->response = $this->request(static::SERVICES, static::GET);
+    }
+    
+    /**
+     * Get service
+     *
+     * @return mixed
+     */
+    public function getService($id)
+    {
+        return $this->response = $this->request(static::SERVICES.'/'.$id, static::GET);
     }
     
     /**
      * @return mixed
      */
-    public function getStatusCode($data = array())
+    public function response()
     {
-        return $this->response = $this->request('status', $data);
+        return $this->response;
     }
     
     /**
@@ -141,21 +179,24 @@ class iCash
     /**
      *
      * @param string $uri
+     * @param string $method
      * @param array $data
      *
      * @return mixed
-     * @throws RuntimeException
+     * @throws Exception
      */
-    public function request($uri, $data = array())
+    public function request($uri, $method, $data = [])
     {
         $this->last_uri = $uri;
         
-        $ch = curl_init();
+        $ch = $this->initCurl($method, $data);
+        
         curl_setopt($ch, CURLOPT_URL, $this->api . $uri);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            'Authorization: Bearer ' . $this->app_key,
+        ]);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, array_merge($data, array('app_key' => $this->app_key)));
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_VERBOSE, true);
@@ -166,10 +207,37 @@ class iCash
         curl_close($ch);
         
         if ($error > 0) {
-            throw new RuntimeException('CURL ERROR Code:'.$error);
+            throw new Exception('CURL ERROR Code:'.$error);
         }
         
         return $this->decode($json);
+    }
+    
+    /**
+     * @param string $method
+     * @param array $data
+     *
+     * @return cURL handle
+     * @throws Exception
+     */
+    protected function initCurl($method, $data)
+    {
+        $ch = curl_init();
+        
+        switch ($method) {
+            case static::POST:
+                curl_setopt($ch, CURLOPT_POST, true);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+                break;
+            
+            case static::GET:
+                break;
+            
+            default:
+                throw new Exception('Nie obsługiwany typ: '.$method);
+        }
+        
+        return $ch;
     }
     
     /**
