@@ -1,6 +1,6 @@
 <?php
 
-namespace Icashpl\ApiPhp;
+namespace iCashpl\ApiPhp;
 
 use Exception;
 
