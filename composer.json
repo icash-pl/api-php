@@ -8,7 +8,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Icashpl\\ApiPhp\\": "src/"
+            "iCashpl\\ApiPhp\\": "src/"
         }
     },
     "minimum-stability": "stable"
