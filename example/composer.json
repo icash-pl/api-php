@@ -1,0 +1,5 @@
+{
+    "require": {
+        "icash-pl/api-php": "^1.0"
+    }
+}

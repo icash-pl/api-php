@@ -1,0 +1,38 @@
+[
+    {
+        "name": "icash-pl/api-php",
+        "version": "1.0.3",
+        "version_normalized": "1.0.3.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/icash-pl/api-php.git",
+            "reference": "b530bfd6395371542f7267a839386168e6907bf7"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/icash-pl/api-php/zipball/b530bfd6395371542f7267a839386168e6907bf7",
+            "reference": "b530bfd6395371542f7267a839386168e6907bf7",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.0"
+        },
+        "time": "2016-11-15 15:00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "iCashpl\\ApiPhp\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "description": "iCash API PHP",
+        "keywords": [
+            "api",
+            "icash"
+        ]
+    }
+]

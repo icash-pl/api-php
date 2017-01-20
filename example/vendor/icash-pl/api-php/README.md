@@ -1,11 +1,8 @@
 iCash.pl: API PHP
 ==
-## Quick Installation
-```php   
-composer require icash-pl/api-php
-```
 
 ## Getting started
+
 ```php
 <?php
 use iCashpl\ApiPhp\iCash;
